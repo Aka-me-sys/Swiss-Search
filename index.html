@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SwissSearch</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet MarkerCluster -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <!-- Lucide icons (SVG inline replacements via CSS) -->
+    <style>
+        body { font-family: 'Google Sans', 'Segoe UI', sans-serif; }
+        #map { width: 100%; height: 650px; }
+        .spinner {
+            width: 18px; height: 18px;
+            border: 2px solid #bfdbfe;
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen bg-[#e9ecef] flex flex-col">
+<!-- Navbar -->
+<nav class="bg-[#e9ecef]">
+    <div class="max-w-7xl mx-auto px-6">
+        <ul class="flex items-center space-x-10 py-4">
+            <li><p class="text-xl font-medium cursor-pointer hover:text-blue-500 transition-colors">(Name Of Domain)</p></li>
+            <li><a class="text-xl font-medium cursor-pointer hover:text-blue-500 transition-colors">Community</a></li>
+            <li><a class="text-xl font-medium cursor-pointer hover:text-blue-500 transition-colors">
+                Kontakt</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- Hero -->
+<section class="min-h-[28vh] mb-4 w-full flex items-center justify-center px-6 relative overflow-hidden">
+    <div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-purple-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+    <div class="w-full max-w-4xl text-center z-10 mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">Finde alles in der Schweiz</h1>
+        <p class="text-blue-600 font-semibold tracking-wide uppercase text-sm mt-6">
+            Firmen, Standorte &amp; Dienstleistungen in der Schweiz
+        </p>
+        <div class="mt-6 flex flex-col sm:flex-row items-center gap-3 bg-white border border-gray-200 shadow-lg rounded-2xl p-3">
+            <input id="searchInput" type="text"
+                   placeholder="z.B. «Restaurant Zürich» oder «Apotheke Bern»…"
+                   class="w-full px-4 py-3 text-lg outline-none text-gray-700 bg-transparent"
+            />
+            <button id="searchBtn"
+                    class="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white px-6 py-3 rounded-xl font-semibold w-full sm:w-auto text-lg flex items-center justify-center gap-2 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" id="searchIcon">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+                <span id="btnSpinner" class="spinner hidden"></span>
+                Suchen
+            </button>
+        </div>
+        <!-- Suggestion chips -->
+        <div class="mt-3 flex flex-wrap justify-center gap-2" id="suggestions"></div>
+    </div>
+</section>
+<!-- Map -->
+<section class="px-6 flex-1">
+    <div class="max-w-6xl mx-auto">
+        <div class="bg-white rounded-3xl shadow-lg border border-gray-200 overflow-hidden relative">
+            <!-- Status overlay -->
+            <div id="statusOverlay"
+                 class="hidden absolute top-4 left-1/2 -translate-x-1/2 z-[1000] bg-white border border-gray-200 shadow-md rounded-full px-5 py-2 text-sm font-medium text-gray-700 flex items-center gap-2">
+                <span id="overlaySpinner" class="spinner hidden"></span>
+                <span id="overlayText"></span>
+            </div>
+            <!-- Empty state -->
+            <div id="emptyState"
+                 class="absolute inset-0 z-[500] flex items-center justify-center pointer-events-none">
+                <div class="bg-white/90 backdrop-blur-sm rounded-2xl px-8 py-6 shadow text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="#60a5fa" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="mx-auto mb-2">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <p class="text-gray-700 font-medium">Gib oben etwas ein und klicke «Suchen»</p>
+                    <p class="text-gray-400 text-sm mt-1">z.B. «Restaurant Zürich» oder «Hotel Bern»</p>
+                </div>
+            </div>
+            <div id="map"></div>
+        </div>
+        <p id="resultsCount" class="hidden text-center text-sm text-gray-500 mt-3"></p>
+    </div>
+</section>
+<!-- Footer -->
+<footer class="mt-20 border-t border-gray-200 bg-[#e9ecef]">
+    <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between gap-10">
+        <div class="md:w-1/3">
+            <h3 class="text-lg font-semibold text-gray-900">SwissSearch</h3>
+            <p class="text-base text-gray-600 mt-3 leading-relaxed">
+                Finde Firmen, Orte und Dienstleistungen in der ganzen Schweiz.
+            </p>
+        </div>
+        <div class="flex gap-16 text-base">
+            <div class="space-y-3">
+                <p class="text-gray-900 font-medium">Soziales</p>
+                <div class="flex flex-col space-y-2 text-gray-700">
+                    <a href="https://muece.com" target="_blank" rel="noreferrer" class="hover:text-blue-500 transition-colors">Portfolio</a>
+                    <a class="hover:text-blue-500 transition-colors cursor-pointer">GitHub</a>
+                    <a class="hover:text-blue-500 transition-colors cursor-pointer">LinkedIn</a>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <p class="text-gray-900 font-medium">Info</p>
+                <div class="flex flex-col space-y-2 text-gray-700">
+                    <a class="hover:text-blue-500 transition-colors cursor-pointer">Impressum</a>
+                    <a class="hover:text-blue-500 transition-colors cursor-pointer">Datenschutz</a>
+                    <a class="hover:text-blue-500 transition-colors cursor-pointer">Kontakt</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 py-5 border-t border-gray-200">
+        © 2026 SwissSearch – Made in Switzerland 🇨🇭
+    </div>
+</footer>
+<script>
+    // ─── Config ───────────────────────────────────────────────────────────────────
+    const KEYWORD_MAP = {
+        restaurant: '"amenity"="restaurant"',
+        restaurants: '"amenity"="restaurant"',
+        café: '"amenity"="cafe"',
+        cafe: '"amenity"="cafe"',
+        cafés: '"amenity"="cafe"',
+        cafes: '"amenity"="cafe"',
+        kaffee: '"amenity"="cafe"',
+        bank: '"amenity"="bank"',
+        banken: '"amenity"="bank"',
+        apotheke: '"amenity"="pharmacy"',
+        apotheken: '"amenity"="pharmacy"',
+        pharmacy: '"amenity"="pharmacy"',
+        spital: '"amenity"="hospital"',
+        hospital: '"amenity"="hospital"',
+        schule: '"amenity"="school"',
+        school: '"amenity"="school"',
+        post: '"amenity"="post_office"',
+        tankstelle: '"amenity"="fuel"',
+        fuel: '"amenity"="fuel"',
+        hotel: '"tourism"="hotel"',
+        hotels: '"tourism"="hotel"',
+        museum: '"tourism"="museum"',
+        museen: '"tourism"="museum"',
+        coiffeur: '"shop"="hairdresser"',
+        barber: '"shop"="hairdresser"',
+        friseur: '"shop"="hairdresser"',
+        supermarkt: '"shop"="supermarket"',
+        supermarket: '"shop"="supermarket"',
+        migros: '"shop"="supermarket"]["name"~"Migros",i',
+        coop: '"shop"="supermarket"]["name"~"Coop",i',
+        lidl: '"shop"="supermarket"]["name"~"Lidl",i',
+        aldi: '"shop"="supermarket"]["name"~"Aldi",i',
+        spar: '"shop"="supermarket"]["name"~"Spar",i',
+        bäckerei: '"shop"="bakery"',
+        bakery: '"shop"="bakery"',
+        arzt: '"amenity"="doctors"',
+        zahnarzt: '"amenity"="dentist"',
+        dentist: '"amenity"="dentist"',
+        parking: '"amenity"="parking"',
+        parkplatz: '"amenity"="parking"',
+        bar: '"amenity"="bar"',
+        bars: '"amenity"="bar"',
+    };
+    const SUGGESTIONS = ["Restaurant", "Café", "Hotel", "Supermarkt", "Apotheke", "Coiffeur", "Bank", "Museum", "Bar", "Zahnarzt"];
+    // ─── Map init ─────────────────────────────────────────────────────────────────
+    const map = L.map('map', {
+        center: [46.8182, 8.2275],
+        zoom: 8,
+        minZoom: 7,
+        maxZoom: 18,
+        maxBounds: [[45.5, 5.5], [48.5, 11.5]],
+        maxBoundsViscosity: 1.0,
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+    const canvasRenderer = L.canvas({ padding: 0.5 });
+    let clusterGroup = null;
+    // ─── Suggestion chips ─────────────────────────────────────────────────────────
+    const suggestionsEl = document.getElementById('suggestions');
+    SUGGESTIONS.forEach(s => {
+        const btn = document.createElement('button');
+        btn.textContent = s;
+        btn.className = 'text-sm px-3 py-1 rounded-full bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors shadow-sm';
+        btn.addEventListener('click', () => {
+            document.getElementById('searchInput').value = s;
+            doSearch(s);
+        });
+        suggestionsEl.appendChild(btn);
+    });
+    // ─── UI helpers ───────────────────────────────────────────────────────────────
+    function setLoading(on) {
+        const btn = document.getElementById('searchBtn');
+        const icon = document.getElementById('searchIcon');
+        const spinner = document.getElementById('btnSpinner');
+        btn.disabled = on;
+        icon.classList.toggle('hidden', on);
+        spinner.classList.toggle('hidden', !on);
+    }
+    function setStatus(text, showSpinner) {
+        const overlay = document.getElementById('statusOverlay');
+        const overlayText = document.getElementById('overlayText');
+        const overlaySpinner = document.getElementById('overlaySpinner');
+        if (!text) { overlay.classList.add('hidden'); return; }
+        overlayText.textContent = text;
+        overlaySpinner.classList.toggle('hidden', !showSpinner);
+        overlay.classList.remove('hidden');
+    }
+    function setEmptyState(show) {
+        document.getElementById('emptyState').style.display = show ? 'flex' : 'none';
+    }
+    function setResultsCount(n) {
+        const el = document.getElementById('resultsCount');
+        if (n > 0) { el.textContent = n + ' Orte gefunden'; el.classList.remove('hidden'); }
+        else { el.classList.add('hidden'); }
+    }
+    function renderPlaces(places) {
+        if (clusterGroup) { map.removeLayer(clusterGroup); clusterGroup = null; }
+        if (!places.length) return;
+        clusterGroup = L.markerClusterGroup({
+            chunkedLoading: true, chunkSize: 100, chunkDelay: 30,
+            maxClusterRadius: 60, disableClusteringAtZoom: 17,
+        });
+        const markers = places.map(p => {
+            const m = L.circleMarker([p.lat, p.lon], {
+                renderer: canvasRenderer, radius: 7,
+                fillColor: '#2563eb', color: '#fff', weight: 1.5, fillOpacity: 0.9,
+            });
+            const addr = p.address ? `<br/><span style="color:#6b7280;font-size:12px">${p.address}</span>` : '';
+            m.bindPopup(`<div style="min-width:140px"><strong>${p.name}</strong><br/><span style="color:#2563eb;font-size:12px;font-weight:500">${p.type}</span>${addr}</div>`);
+            return m;
+        });
+        clusterGroup.addLayers(markers);
+        clusterGroup.addTo(map);
+    }
+    // ─── Type label ───────────────────────────────────────────────────────────────
+    function getType(tags) {
+        if (!tags) return 'Ort';
+        if (tags.shop === 'hairdresser') return 'Barber / Coiffeur';
+        if (tags.shop === 'supermarket') return 'Supermarkt';
+        if (tags.shop === 'bakery') return 'Bäckerei';
+        if (tags.amenity === 'restaurant') return 'Restaurant';
+        if (tags.amenity === 'cafe') return 'Café';
+        if (tags.amenity === 'bank') return 'Bank';
+        if (tags.amenity === 'pharmacy') return 'Apotheke';
+        if (tags.amenity === 'hospital') return 'Spital';
+        if (tags.amenity === 'school') return 'Schule';
+        if (tags.amenity === 'post_office') return 'Post';
+        if (tags.amenity === 'fuel') return 'Tankstelle';
+        if (tags.amenity === 'doctors') return 'Arzt';
+        if (tags.amenity === 'dentist') return 'Zahnarzt';
+        if (tags.amenity === 'parking') return 'Parkplatz';
+        if (tags.amenity === 'bar') return 'Bar';
+        if (tags.tourism === 'hotel') return 'Hotel';
+        if (tags.tourism === 'museum') return 'Museum';
+        if (tags.shop) return 'Shop';
+        if (tags.tourism) return 'Tourismus';
+        if (tags.amenity) return tags.amenity;
+        return 'Ort';
+    }
+    // ─── Overpass query builder ───────────────────────────────────────────────────
+    function buildOverpassQuery(keywords, bounds) {
+        const bbox = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
+        const filters = [...new Set(keywords.map(w => KEYWORD_MAP[w.toLowerCase()]).filter(Boolean))];
+        if (filters.length > 0) {
+            const parts = filters.map(f => `node[${f}](${bbox});`).join('\n  ');
+            return `[out:json][timeout:15];\n(\n  ${parts}\n);\nout 300;`;
+        }
+        const pat = keywords.join('|');
+        return `[out:json][timeout:15];\n(\n  node["name"~"${pat}",i](${bbox});\n);\nout 300;`;
+    }
+    // ─── Search ───────────────────────────────────────────────────────────────────
+    let abortCtrl = null;
+    async function doSearch(searchQuery) {
+        searchQuery = searchQuery.trim();
+        if (!searchQuery) return;
+        if (abortCtrl) abortCtrl.abort();
+        abortCtrl = new AbortController();
+        const signal = abortCtrl.signal;
+        setLoading(true);
+        setStatus('Wird geladen…', true);
+        setEmptyState(false);
+        setResultsCount(0);
+        if (clusterGroup) { map.removeLayer(clusterGroup); clusterGroup = null; }
+        const words = searchQuery.toLowerCase().split(/\s+/);
+        const knownKeywords = words.filter(w => KEYWORD_MAP[w]);
+        const locationWords = words.filter(w => !KEYWORD_MAP[w]);
+        try {
+            // ── MODE A: category keyword ──────────────────────────────────────────────
+            if (knownKeywords.length > 0) {
+                let bounds = map.getBounds();
+                if (locationWords.length > 0) {
+                    const geo = await fetch(
+                        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(locationWords.join(' ') + ', Schweiz')}&format=json&limit=1&countrycodes=ch`,
+                        { signal }
+                    );
+                    const geoData = await geo.json();
+                    if (geoData[0]) {
+                        const lat = parseFloat(geoData[0].lat);
+                        const lon = parseFloat(geoData[0].lon);
+                        map.flyTo([lat, lon], 14, { duration: 1.2 });
+                        const o = 0.04;
+                        bounds = L.latLngBounds([lat - o, lon - o], [lat + o, lon + o]);
+                    }
+                }
+                const q = buildOverpassQuery(knownKeywords, bounds);
+                const res = await fetch('https://overpass-api.de/api/interpreter', { method: 'POST', body: q, signal });
+                const data = await res.json();
+                const results = (data.elements || [])
+                    .filter(el => el.lat && el.lon)
+                    .map(el => ({
+                        lat: el.lat, lon: el.lon,
+                        name: el.tags?.name || 'Unbekannt',
+                        type: getType(el.tags),
+                        address: [el.tags?.['addr:street'], el.tags?.['addr:housenumber'], el.tags?.['addr:city']].filter(Boolean).join(' '),
+                    }));
+                renderPlaces(results);
+                setResultsCount(results.length);
+                setStatus(results.length === 0 ? 'Keine Ergebnisse gefunden.' : null, false);
+                return;
+            }
+            // ── MODE B: business name / address ───────────────────────────────────────
+            const hasNumber = /\d/.test(searchQuery);
+            const zoomLevel = hasNumber ? 18 : 16;
+            const nomRes = await fetch(
+                `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchQuery + ', Schweiz')}&format=json&limit=10&countrycodes=ch&addressdetails=1`,
+                { signal }
+            );
+            const nomData = await nomRes.json();
+            const fromNom = nomData.map(item => {
+                const addr = item.address || {};
+                const street = [addr.road, addr.house_number].filter(Boolean).join(' ');
+                const city = addr.city || addr.town || addr.village || addr.municipality || '';
+                return {
+                    lat: parseFloat(item.lat), lon: parseFloat(item.lon),
+                    name: addr.amenity || addr.shop || item.display_name.split(',')[0],
+                    type: item.type || item.class,
+                    address: [street, city].filter(Boolean).join(', '),
+                };
+            });
+            if (fromNom.length > 0) {
+                map.flyTo([fromNom[0].lat, fromNom[0].lon], zoomLevel, { duration: 1.2 });
+                renderPlaces(fromNom);
+                setResultsCount(fromNom.length);
+                setStatus(null, false);
+                return;
+            }
+            // ── Overpass fallback: local shop name search ─────────────────────────────
+            const nameParts = searchQuery.split(/\s+/);
+            const lastWord = nameParts[nameParts.length - 1];
+            let fallbackBounds = map.getBounds();
+            let nameWords = nameParts;
+            if (nameParts.length > 1) {
+                const cityGeo = await fetch(
+                    `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(lastWord + ', Schweiz')}&format=json&limit=1&countrycodes=ch&featuretype=city`,
+                    { signal }
+                );
+                const cityData = await cityGeo.json();
+                if (cityData[0] && ['city', 'town', 'village', 'municipality'].includes(cityData[0].type)) {
+                    const clat = parseFloat(cityData[0].lat);
+                    const clon = parseFloat(cityData[0].lon);
+                    fallbackBounds = L.latLngBounds([clat - 0.15, clon - 0.15], [clat + 0.15, clon + 0.15]);
+                    nameWords = nameParts.slice(0, -1);
+                }
+            }
+            const namePattern = nameWords.join('|');
+            const bbox = `${fallbackBounds.getSouth()},${fallbackBounds.getWest()},${fallbackBounds.getNorth()},${fallbackBounds.getEast()}`;
+            const opRes = await fetch('https://overpass-api.de/api/interpreter', {
+                method: 'POST',
+                body: `[out:json][timeout:15];\n(\n  node["name"~"${namePattern}",i](${bbox});\n  way["name"~"${namePattern}",i](${bbox});\n);\nout center 50;`,
+                signal,
+            });
+            const opData = await opRes.json();
+            const fromOp = (opData.elements || [])
+                .map(el => {
+                    const lat = el.lat ?? el.center?.lat;
+                    const lon = el.lon ?? el.center?.lon;
+                    if (!lat || !lon) return null;
+                    return {
+                        lat, lon,
+                        name: el.tags?.name || 'Unbekannt',
+                        type: getType(el.tags),
+                        address: [el.tags?.['addr:street'], el.tags?.['addr:housenumber'], el.tags?.['addr:city']].filter(Boolean).join(' '),
+                    };
+                })
+                .filter(Boolean);
+            if (fromOp.length > 0) {
+                map.flyTo([fromOp[0].lat, fromOp[0].lon], 16, { duration: 1.2 });
+                renderPlaces(fromOp);
+                setResultsCount(fromOp.length);
+                setStatus(null, false);
+            } else {
+                setStatus('Keine Ergebnisse gefunden.', false);
+            }
+        } catch (err) {
+            if (err.name !== 'AbortError') setStatus('Fehler beim Laden. Bitte erneut versuchen.', false);
+        } finally {
+            setLoading(false);
+        }
+    }
+    // ─── Event listeners ──────────────────────────────────────────────────────────
+    document.getElementById('searchBtn').addEventListener('click', () => {
+        doSearch(document.getElementById('searchInput').value);
+    });
+    document.getElementById('searchInput').addEventListener('keydown', e => {
+        if (e.key === 'Enter') doSearch(e.target.value);
+    });
+</script>
+</body>
+</html>
