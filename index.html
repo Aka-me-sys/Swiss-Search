@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700,800&display=swap" rel="stylesheet">
+
+
     <style>
         body { font-family: 'Segoe UI', system-ui, sans-serif; }
         #map { width: 100%; height: 650px; }
@@ -32,88 +35,97 @@
 <body class="min-h-screen bg-[#e9ecef] flex flex-col">
 
 <!-- Navbar -->
-<div class="sticky top-4 z-50 flex justify-center px-4">
-    <nav class="w-full max-w-3xl bg-white/60 backdrop-blur-md border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.1)] rounded-2xl px-5">
-        <div class="flex items-center justify-between h-14">
+<nav class="sticky top-0 z-50 bg-[#e9ecef] border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between h-16">
 
             <!-- Logo -->
             <div class="flex flex-col leading-tight cursor-default">
-                <span class="text-lg font-bold text-gray-900 tracking-tight">SwissSearch</span>
+                <span class="text-lg font-bold text-gray-900 tracking-tight">Telbuch</span>
                 <span class="text-[10px] text-gray-400 tracking-widest uppercase">Schweizer Ortsverzeichnis</span>
             </div>
 
             <!-- Desktop links -->
             <div class="hidden md:flex items-center gap-6">
                 <a href="#community"
-                   class="relative text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer
-                  after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-800 after:rounded-full
-                  after:transition-all after:duration-300 hover:after:w-full
-                  aria-[current=page]:text-gray-900 aria-[current=page]:after:w-full pb-0.5">
+                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
                     Community
                 </a>
-                <a href="mailto:info@swisssearch.ch"
-                   class="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 active:scale-95
-                  transition-all duration-200 px-4 py-1.5 rounded-xl shadow-sm
-                  hover:shadow-md hover:shadow-blue-200">
+                <a href="https://telbuch.ch/Vorwahlenschweiz.html"
+                   target="_blank" rel="noreferrer"
+                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
+                    Vorwahlen Schweiz
+                </a>
+                <a href="https://telbuch.ch/VorwahlenAusland.php"
+                   target="_blank" rel="noreferrer"
+                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
+                    Vorwahlen Ausland
+                </a>
+                <a href="https://telbuch.ch/InternationalesTelefonbuch.html"
+                   target="_blank" rel="noreferrer"
+                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
+                    Telefonbuch International
+                </a>
+                <a href="Kontakt.html"
+                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
                     Kontakt
                 </a>
             </div>
 
             <!-- Hamburger -->
             <button onclick="document.getElementById('mob-c').classList.toggle('hidden');"
-                    class="md:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-black/5 transition-colors">
+                    class="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-black/5 transition-colors">
                 <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
                 <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
                 <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
             </button>
 
         </div>
+    </div>
 
-        <!-- Mobile menu -->
-        <div id="mob-c" class="hidden md:hidden border-t border-black/5 py-3 flex flex-col gap-1">
+    <!-- Mobile menu -->
+    <div id="mob-c" class="hidden md:hidden bg-[#e9ecef] border-t border-gray-200">
+        <div class="max-w-6xl mx-auto px-6 py-3 flex flex-col gap-1">
             <a href="#community"
-               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors cursor-pointer">
+               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
                 Community
             </a>
+            <a href="https://telbuch.ch/Vorwahlenschweiz.html"
+               target="_blank" rel="noreferrer"
+               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
+                Vorwahlen Schweiz
+            </a>
+            <a href="https://telbuch.ch/VorwahlenAusland.php"
+               target="_blank" rel="noreferrer"
+               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
+                Vorwahlen Ausland
+            </a>
+            <a href="https://telbuch.ch/InternationalesTelefonbuch.html"
+               target="_blank" rel="noreferrer"
+               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
+                Telefonbuch International
+            </a>
             <a href="mailto:info@swisssearch.ch"
-               class="text-center text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl mt-1 transition-colors">
+               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
                 Kontakt
             </a>
         </div>
+    </div>
 
-    </nav>
-</div>
+</nav>
+
 
 <!-- Hero -->
-<section class="min-h-[32vh] mb-4 w-full flex items-center justify-center px-6 relative overflow-hidden py-10">
+<section class="mb-4 w-full flex items-center justify-center px-6 relative overflow-hidden py-24">
     <!-- Background blobs -->
-    <div class="absolute -top-20 -right-32 w-[420px] h-[420px] bg-blue-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
-    <div class="absolute -bottom-32 -left-32 w-[480px] h-[480px] bg-indigo-100 rounded-full blur-3xl opacity-35 pointer-events-none"></div>
+    <div class="absolute -top-10 -right-16 w-[200px] h-[200px] bg-blue-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+    <div class="absolute -bottom-16 -left-16 w-[220px] h-[220px] bg-indigo-100 rounded-full blur-3xl opacity-35 pointer-events-none"></div>
 
-    <div class="w-full max-w-3xl text-center z-10 mx-auto">
-
-        <!-- Headline -->
-        <h1 class="text-4xl md:text-5xl font-bold leading-tight tracking-tight"
-            style="font-family: 'Google Sans', 'Segoe UI', sans-serif;
-           background: linear-gradient(160deg, #1d4ed8 0%, #3b82f6 100%);
-           -webkit-background-clip: text;
-           -webkit-text-fill-color: transparent;
-           background-clip: text;
-           filter: drop-shadow(0 2px 20px rgba(59,130,246,0.3));">
-            Finde alles in der Schweiz
-        </h1>
-
-        <!-- Badge -->
-        <div class="inline-flex mt-4 items-center gap-3 text-gray-400 text-xs font-semibold tracking-widest uppercase mb-5">
-            <span class="w-8 h-px bg-gray-700"></span>
-            Firmen, Standorte &amp; Dienstleistungen in der Schweiz
-            <span class="w-8 h-px bg-gray-700"></span>
-        </div>
+    <div class="w-full max-w-6xl text-center z-10 mx-auto">
 
         <!-- Search bar -->
-        <div class="mt-6 flex flex-col sm:flex-row items-stretch gap-0 bg-white border border-gray-200 shadow-[0_4px_24px_rgba(0,0,0,0.08)] rounded-2xl p-2 focus-within:border-blue-300 focus-within:shadow-[0_4px_28px_rgba(59,130,246,0.12)] transition-all duration-200">
-            <!-- Icon inside input -->
-            <div class="flex items-center pl-3 text-gray-400 flex-shrink-0">
+        <div class="flex flex-col sm:flex-row items-stretch gap-0 bg-white/60 backdrop-blur-md border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.1)] rounded-3xl p-2 focus-within:border-blue-300 focus-within:shadow-[0_4px_28px_rgba(59,130,246,0.12)] transition-all duration-200">
+            <div class="flex items-center pl-4 text-gray-400 flex-shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor"
                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                     <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -122,14 +134,27 @@
 
             <input id="searchInput" type="text"
                    placeholder="z.B. «Restaurant Zürich» oder «Apotheke Bern»…"
-                   class="w-full px-3 py-3 text-base outline-none text-gray-700 bg-transparent placeholder-gray-400"
+                   class="w-full px-3 py-3.5 text-base outline-none text-gray-700 bg-transparent placeholder-gray-400"
                    style="font-family: 'Google Sans', 'Segoe UI', sans-serif;" />
 
-            <!-- Divider (desktop only) -->
-            <div class="hidden sm:block w-px bg-gray-200 my-1 flex-shrink-0"></div>
+            <!-- Voice Button -->
+            <button id="voiceBtn"
+                    onclick="startVoice()"
+                    class="flex items-center justify-center w-10 h-10 my-auto mx-1 rounded-xl text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 flex-shrink-0"
+                    title="Spracheingabe">
+                <svg id="voiceIcon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/>
+                    <line x1="8" y1="23" x2="16" y2="23"/>
+                </svg>
+            </button>
+
+            <div class="hidden sm:block w-px bg-gray-200 my-2 flex-shrink-0"></div>
 
             <button id="searchBtn"
-                    class="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white px-6 py-2.5 rounded-xl font-semibold w-full sm:w-auto text-sm flex items-center justify-center gap-2 transition-colors duration-200 flex-shrink-0 mt-2 sm:mt-0"
+                    class="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white px-6 py-2.5 rounded-2xl font-semibold w-full sm:w-auto text-sm flex items-center justify-center gap-2 transition-all duration-200 flex-shrink-0 mt-2 sm:mt-0 active:scale-95 shadow-sm hover:shadow-md hover:shadow-blue-200"
                     style="font-family: 'Google Sans', 'Segoe UI', sans-serif;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
                      stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" id="searchIcon">
@@ -138,6 +163,13 @@
                 <span id="btnSpinner" class="spinner hidden"></span>
                 Suchen
             </button>
+        </div>
+
+        <!-- Badge -->
+        <div class="inline-flex mt-4 items-center gap-3 text-gray-400 text-xs font-semibold tracking-widest uppercase mb-5">
+            <span class="w-8 h-px bg-gray-700"></span>
+            Firmen, Standorte &amp; Dienstleistungen in der Schweiz
+            <span class="w-8 h-px bg-gray-700"></span>
         </div>
 
         <!-- Suggestion chips -->
@@ -162,32 +194,40 @@
                 <span id="overlayText"></span>
             </div>
             <div id="emptyState" class="hidden"></div>
-            <div id="map" class="w-full h-[360px] sm:h-[520px] md:h-[600px]"></div>
+            <div id="map" class="w-full h-[200px] sm:h-[520px] md:h-[600px]"></div>
         </div>
 
     </div>
 </section>
 <!-- Footer -->
-<!-- Footer -->
-<footer class="mt-20 border-t border-gray-200 bg-[#e9ecef]">
-    <div class="max-w-3xl mx-auto px-6 py-10 text-center">
+<footer class="mt-10 bg-[#e9ecef] border-t border-gray-200">
+    <div class="max-w-6xl mx-auto px-6">
 
-        <h3 class="text-base font-bold text-gray-900 tracking-tight">SwissSearch</h3>
-        <p class="text-[10px] text-gray-400 tracking-widest uppercase mt-0.5">Schweizer Ortsverzeichnis</p>
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 py-6">
 
-        <!-- Desktop: eine Zeile, Mobile: zwei Zeilen -->
-        <div class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-3">
-            <a href="https://muece.com" target="_blank" rel="noreferrer"
-               class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">Portfolio</a>
-            <a class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200 cursor-pointer">GitHub</a>
-            <a class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200 cursor-pointer">LinkedIn</a>
-            <a class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200 cursor-pointer">Impressum</a>
-            <a class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200 cursor-pointer">Datenschutz</a>
-            <a href="mailto:info@swisssearch.ch"
-               class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">Kontakt</a>
+            <!-- Logo -->
+            <div class="text-center sm:text-left cursor-default">
+                <span class="text-lg font-bold text-gray-900 tracking-tight">Telbuch</span>
+                <p class="text-[10px] text-gray-400 tracking-widest uppercase mt-0.5">Schweizer Ortsverzeichnis</p>
+            </div>
+
+            <!-- Links -->
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <a href="https://muece.com" target="_blank" rel="noreferrer"
+                   class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">Portfolio</a>
+                <a href="" class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">GitHub</a>
+                <a href="" class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">LinkedIn</a>
+                <a href="" class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">Impressum</a>
+                <a href="" class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">Datenschutz</a>
+            </div>
+
         </div>
 
-        <p class="text-xs text-gray-400 mt-6">© 2026 SwissSearch · Made in Switzerland 🇨🇭</p>
+        <!-- Bottom -->
+        <div class="border-t border-gray-200 py-4 text-center">
+            <p class="text-xs text-gray-400">© 2026 SwissSearch · Made in Switzerland 🇨🇭</p>
+        </div>
+
     </div>
 </footer>
 
@@ -218,7 +258,6 @@
         bar: '"amenity"="bar"', bars: '"amenity"="bar"',
     };
 
-    // Map init
     const map = L.map('map', {
         center: [46.8182, 8.2275], zoom: 8, minZoom: 7, maxZoom: 18,
         maxBounds: [[45.5, 5.5], [48.5, 11.5]], maxBoundsViscosity: 1.0,
@@ -264,11 +303,10 @@
         });
         const markers = places.map(p => {
             const m = L.circleMarker([p.lat, p.lon], {
-                renderer: canvasRenderer, radius: 7,
-                fillColor: '#2563eb', color: '#fff', weight: 1.5, fillOpacity: 0.9,
+                renderer: canvasRenderer, radius: window.innerWidth < 640 ? 14 : 9,
+                fillColor: '#2563eb', color: '#fff', weight: 2.5, fillOpacity: 0.9,
             });
 
-            // Punkte durch Unterstriche ersetzen damit CSS-Selektor nicht crasht
             const placeId = `${p.lat.toFixed(5)}_${p.lon.toFixed(5)}`.replace(/\./g, '_');
 
             m.on('click', () => {
@@ -290,16 +328,22 @@
                     </div>`).join('')
                     : '<p style="color:#9ca3af;font-size:12px;margin:8px 0">Noch keine Bewertungen.</p>';
 
-                const addr = p.address ? `<div style="color:#6b7280;font-size:12px;margin-bottom:8px">${p.address}</div>` : '';
+                const addr = p.address ? `<div style="color:#6b7280;font-size:12px;margin-bottom:4px">📍 ${p.address}</div>` : '';
+                const phoneHtml = p.phone ? `<div style="font-size:12px;color:#374151;margin-bottom:4px">📞 <a href="tel:${p.phone}" style="color:#2563eb;text-decoration:none">${p.phone}</a></div>` : '';
+                const websiteHtml = p.website ? `<div style="font-size:12px;color:#374151;margin-bottom:4px">🌐 <a href="${p.website}" target="_blank" style="color:#2563eb;text-decoration:none">Website öffnen</a></div>` : '';
+                const hoursHtml = p.hours ? `<div style="font-size:12px;color:#6b7280;margin-bottom:8px">🕐 ${p.hours}</div>` : '';
                 const ratingHtml = avgRating ? `<div style="color:#f59e0b;font-size:13px;font-weight:600;margin-bottom:8px">⌀ ${avgRating} ★ <span style="color:#9ca3af;font-weight:400">(${reviews.length} Bewertung${reviews.length !== 1 ? 'en' : ''})</span></div>` : '';
 
-                L.popup({ maxWidth: 280, minWidth: 240 })
+                L.popup({ maxWidth: 290, minWidth: 250 })
                     .setLatLng([p.lat, p.lon])
                     .setContent(`
                     <div style="font-family:'Segoe UI',sans-serif;padding:4px 2px">
                         <div style="font-weight:700;font-size:15px;color:#111827;margin-bottom:2px">${p.name}</div>
-                        <div style="color:#2563eb;font-size:12px;font-weight:500;margin-bottom:6px">${p.type}</div>
+                        <div style="color:#2563eb;font-size:12px;font-weight:500;margin-bottom:8px">${p.type}</div>
                         ${addr}
+                        ${phoneHtml}
+                        ${websiteHtml}
+                        ${hoursHtml}
                         ${ratingHtml}
                         <div style="border-top:1px solid #f3f4f6;padding-top:10px;margin-bottom:6px">
                             <p style="font-size:12px;font-weight:600;color:#374151;margin-bottom:6px">Bewertung abgeben:</p>
@@ -317,7 +361,6 @@
                 `)
                     .openOn(map);
 
-                // Star click handler
                 setTimeout(() => {
                     const starsDiv = document.getElementById(`stars_${placeId}`);
                     if (!starsDiv) return;
@@ -345,7 +388,6 @@
         }
     }
 
-    // Ausserhalb von renderPlaces — global:
     function saveReview(placeId) {
         const starsDiv = document.getElementById(`stars_${placeId}`);
         const rating = parseInt(starsDiv?.dataset.selected || '0');
@@ -362,7 +404,6 @@
         });
         localStorage.setItem(`reviews_${placeId}`, JSON.stringify(reviews));
 
-        // Popup neu rendern
         document.getElementById(`comment_${placeId}`).value = '';
         const reviewsContainer = document.getElementById(`reviews_${placeId}`);
         if (reviewsContainer) {
@@ -374,7 +415,6 @@
             </div>`).join('');
         }
 
-        // Sterne zurücksetzen
         starsDiv.dataset.selected = '0';
         document.querySelectorAll(`#stars_${placeId} .star`).forEach(s => s.style.color = '#d1d5db');
     }
@@ -404,6 +444,51 @@
         return 'Ort';
     }
 
+    function startVoice() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+            alert('Dein Browser unterstützt keine Spracheingabe. Bitte Chrome oder Edge verwenden.');
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'de-CH';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        const btn = document.getElementById('voiceBtn');
+
+        // Listening state
+        recognition.onstart = () => {
+            btn.classList.add('mic-listening');
+            document.getElementById('searchInput').placeholder = 'Spreche jetzt…';
+        };
+
+        // Result
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('searchInput').value = transcript;
+            // Auto-search
+            doSearch(transcript);
+        };
+
+        // Stop
+        recognition.onend = () => {
+            btn.classList.remove('mic-listening');
+            document.getElementById('searchInput').placeholder = 'z.B. «Restaurant Zürich» oder «Apotheke Bern»…';
+        };
+
+        // Error
+        recognition.onerror = (e) => {
+            btn.classList.remove('mic-listening');
+            document.getElementById('searchInput').placeholder = 'z.B. «Restaurant Zürich» oder «Apotheke Bern»…';
+            if (e.error !== 'aborted') alert('Mikrofon-Fehler: ' + e.error);
+        };
+
+        recognition.start();
+    }
+
     function buildOverpassQuery(keywords, bounds) {
         const bbox = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
         const filters = [...new Set(keywords.map(w => KEYWORD_MAP[w.toLowerCase()]).filter(Boolean))];
@@ -416,7 +501,6 @@
 
     let abortCtrl = null;
 
-    // Fix 2 — doSearch mit korrigierten Zoom-Werten
     async function doSearch(searchQuery) {
         searchQuery = searchQuery.trim();
         if (!searchQuery) return;
@@ -461,8 +545,10 @@
                     name: el.tags?.name || 'Unbekannt',
                     type: getType(el.tags),
                     address: [el.tags?.['addr:street'], el.tags?.['addr:housenumber'], el.tags?.['addr:city']].filter(Boolean).join(' '),
+                    phone: el.tags?.phone || el.tags?.['contact:phone'] || null,
+                    website: el.tags?.website || el.tags?.['contact:website'] || null,
+                    hours: el.tags?.opening_hours || null,
                 }));
-                // autoFit=true nur wenn keine Location angegeben
                 renderPlaces(results, !locationWords.length);
                 setResultsCount(results.length);
                 setStatus(results.length === 0 ? 'Keine Ergebnisse gefunden.' : null, false);
@@ -485,11 +571,13 @@
                     name: addr.amenity || addr.shop || item.display_name.split(',')[0],
                     type: item.type || item.class,
                     address: [street, city].filter(Boolean).join(', '),
+                    phone: null,
+                    website: null,
+                    hours: null,
                 };
             });
 
             if (fromNom.length > 0) {
-                // hasNumber=true (Adresse) → 17, sonst 14
                 map.flyTo([fromNom[0].lat, fromNom[0].lon], hasNumber ? 17 : 14, { duration: 1.2 });
                 renderPlaces(fromNom);
                 setResultsCount(fromNom.length);
@@ -534,11 +622,13 @@
                     name: el.tags?.name || 'Unbekannt',
                     type: getType(el.tags),
                     address: [el.tags?.['addr:street'], el.tags?.['addr:housenumber'], el.tags?.['addr:city']].filter(Boolean).join(' '),
+                    phone: el.tags?.phone || el.tags?.['contact:phone'] || null,
+                    website: el.tags?.website || el.tags?.['contact:website'] || null,
+                    hours: el.tags?.opening_hours || null,
                 };
             }).filter(Boolean);
 
             if (fromOp.length > 0) {
-                // Zoom 16 → 14
                 map.flyTo([fromOp[0].lat, fromOp[0].lon], 14, { duration: 1.2 });
                 renderPlaces(fromOp);
                 setResultsCount(fromOp.length);
