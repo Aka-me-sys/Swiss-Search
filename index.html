@@ -18,175 +18,181 @@
 
 
     <style>
-        body { font-family: 'Segoe UI', system-ui, sans-serif; }
-        #map { width: 100%; height: 650px; }
-        .spinner {
-            width: 16px; height: 16px;
-            border: 2px solid #bfdbfe;
-            border-top-color: #2563eb;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
+        body { font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #e9ecef;}
+
+        .nav-link {
+            position: relative;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .nav-link {
+            border-radius: 8px;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+        .nav-link:hover {
+            background-color: rgba(0,0,0,0.05);
+            color: #111827;
+        }
+
+        .nav-link:active {
+            .card {
+                width: 190px;
+                height: 254px;
+                background: rgb(236, 236, 236);
+                box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+            }}
+
+        .wave-group {
+            position: relative;
+            flex: 1;
+            width: 100%;
+        }
+        .wave-group .input {
+            font-size: 15px;
+            padding: 12px 12px 12px 8px;
+            display: block;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #d1d5db;
+            background: transparent;
+            color: #374151;
+            box-sizing: border-box;
+            font-family: 'Google Sans', 'Segoe UI', sans-serif;
+        }
+        .wave-group .input:focus {
+            outline: none;
+        }
+        .wave-group .label {
+            color: #9ca3af;
+            font-size: 15px;
+            font-weight: normal;
+            position: absolute;
+            pointer-events: none;
+            left: 8px;
+            top: 12px;
+            display: flex;
+        }
+        .wave-group .label-char {
+            transition: 0.2s ease all;
+            transition-delay: calc(var(--index) * .05s);
+        }
+        .wave-group .input:focus ~ label .label-char,
+        .wave-group .input:valid ~ label .label-char {
+            transform: translateY(-20px);
+            font-size: 11px;
+            color: #2563eb;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .wave-group .bar {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+        .wave-group .bar:before,
+        .wave-group .bar:after {
+            content: '';
+            height: 2px;
+            width: 0;
+            bottom: 1px;
+            position: absolute;
+            background: #2563eb;
+            transition: 0.2s ease all;
+        }
+        .wave-group .bar:before { left: 50%; }
+        .wave-group .bar:after  { right: 50%; }
+        .wave-group .input:focus ~ .bar:before,
+        .wave-group .input:focus ~ .bar:after {
+            width: 50%;
+        }
+
     </style>
 </head>
 <body class="min-h-screen bg-[#e9ecef] flex flex-col">
 
 <!-- Navbar -->
-<nav class="sticky top-0 z-50 bg-[#e9ecef] border-b border-gray-200">
+<nav class=" top-0 z-50 bg-[#e9ecef] border-b border-gray-200">
     <div class="max-w-6xl mx-auto px-6">
         <div class="flex items-center justify-between h-16">
-
-            <!-- Logo -->
             <div class="flex flex-col leading-tight cursor-default">
                 <span class="text-lg font-bold text-gray-900 tracking-tight">Telbuch</span>
-                <span class="text-[10px] text-gray-400 tracking-widest uppercase">Schweizer Ortsverzeichnis</span>
+                <span class="text-[10px] text-gray-400 tracking-widest uppercase hidden sm:block">Schweizer Ortsverzeichnis</span>
             </div>
-
-            <!-- Desktop links -->
-            <div class="hidden md:flex items-center gap-6">
-                <a href="#community"
-                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
-                    Community
-                </a>
-                <a href="https://telbuch.ch/Vorwahlenschweiz.html"
-                   target="_blank" rel="noreferrer"
-                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
-                    Vorwahlen Schweiz
-                </a>
-                <a href="https://telbuch.ch/VorwahlenAusland.php"
-                   target="_blank" rel="noreferrer"
-                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
-                    Vorwahlen Ausland
-                </a>
-                <a href="https://telbuch.ch/InternationalesTelefonbuch.html"
-                   target="_blank" rel="noreferrer"
-                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
-                    Telefonbuch International
-                </a>
-                <a href="Kontakt.html"
-                   class="text-md font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">
-                    Kontakt
-                </a>
+            <div class="hidden md:flex items-center gap-1">
+                <a href="#community" class="nav-link px-3 py-2 text-md font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Community</a>
+                <a href="Vorwahlen-Schweiz.html" class="nav-link px-3 py-2 text-md font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Vorwahlen Schweiz</a>
+                <a href="https://telbuch.ch/VorwahlenAusland.php" target="_blank" rel="noreferrer" class="nav-link px-3 py-2 text-md font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Vorwahlen Ausland</a>
+                <a href="https://telbuch.ch/InternationalesTelefonbuch.html" target="_blank" rel="noreferrer" class="nav-link px-3 py-2 text-md font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Telefonbuch Int.</a>
+                <a href="Kontakt.html" class="nav-link px-3 py-2 text-md font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Kontakt</a>
             </div>
-
-            <!-- Hamburger -->
             <button onclick="document.getElementById('mob-c').classList.toggle('hidden');"
                     class="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-black/5 transition-colors">
                 <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
                 <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
                 <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
             </button>
-
         </div>
     </div>
-
-    <!-- Mobile menu -->
     <div id="mob-c" class="hidden md:hidden bg-[#e9ecef] border-t border-gray-200">
         <div class="max-w-6xl mx-auto px-6 py-3 flex flex-col gap-1">
-            <a href="#community"
-               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
-                Community
-            </a>
-            <a href="https://telbuch.ch/Vorwahlenschweiz.html"
-               target="_blank" rel="noreferrer"
-               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
-                Vorwahlen Schweiz
-            </a>
-            <a href="https://telbuch.ch/VorwahlenAusland.php"
-               target="_blank" rel="noreferrer"
-               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
-                Vorwahlen Ausland
-            </a>
-            <a href="https://telbuch.ch/InternationalesTelefonbuch.html"
-               target="_blank" rel="noreferrer"
-               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
-                Telefonbuch International
-            </a>
-            <a href="mailto:info@swisssearch.ch"
-               class="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-black/5 px-3 py-2.5 rounded-xl transition-colors">
-                Kontakt
-            </a>
+            <a href="#community" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Community</a>
+            <a href="Vorwahlen-Schweiz.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Vorwahlen Schweiz</a>
+            <a href="https://telbuch.ch/VorwahlenAusland.php" target="_blank" rel="noreferrer" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Vorwahlen Ausland</a>
+            <a href="https://telbuch.ch/InternationalesTelefonbuch.html" target="_blank" rel="noreferrer" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Telefonbuch Int.</a>
+            <a href="Kontakt.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Kontakt</a>
         </div>
     </div>
-
 </nav>
 
-
-<!-- Hero -->
-<section class="mb-4 w-full flex items-center justify-center px-6 relative overflow-hidden py-24">
-    <!-- Background blobs -->
+<!-- Hero + Search -->
+<section class="w-full px-4 sm:px-6 py-6 relative overflow-hidden">
     <div class="absolute -top-10 -right-16 w-[200px] h-[200px] bg-blue-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
     <div class="absolute -bottom-16 -left-16 w-[220px] h-[220px] bg-indigo-100 rounded-full blur-3xl opacity-35 pointer-events-none"></div>
 
-    <div class="w-full max-w-6xl text-center z-10 mx-auto">
-
-        <!-- Search bar -->
-        <div class="flex flex-col sm:flex-row items-stretch gap-0 bg-white/60 backdrop-blur-md border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.1)] rounded-3xl p-2 focus-within:border-blue-300 focus-within:shadow-[0_4px_28px_rgba(59,130,246,0.12)] transition-all duration-200">
-            <div class="flex items-center pl-4 text-gray-400 flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="flex items-center gap-2 bg-white/60 backdrop-blur-md border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.1)] rounded-2xl px-4 py-3">
+            <div class="text-gray-400 flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                     <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                 </svg>
             </div>
-
             <input id="searchInput" type="text"
-                   placeholder="z.B. «Restaurant Zürich» oder «Apotheke Bern»…"
-                   class="w-full px-3 py-3.5 text-base outline-none text-gray-700 bg-transparent placeholder-gray-400"
-                   style="font-family: 'Google Sans', 'Segoe UI', sans-serif;" />
-
-            <!-- Voice Button -->
-            <button id="voiceBtn"
-                    onclick="startVoice()"
-                    class="flex items-center justify-center w-10 h-10 my-auto mx-1 rounded-xl text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 flex-shrink-0"
+                   placeholder="Suchen …"
+                   class="flex-1 text-md outline-none font-semibold text-black bg-transparent placeholder-black py-1"
+                   style="font-family:'Google Sans','Segoe UI',sans-serif;" />
+            <button id="voiceBtn" onclick="startVoice()"
+                    class="flex items-center justify-center w-8 h-8 rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 flex-shrink-0"
                     title="Spracheingabe">
-                <svg id="voiceIcon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <svg id="voiceIcon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                     <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                     <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
                     <line x1="12" y1="19" x2="12" y2="23"/>
                     <line x1="8" y1="23" x2="16" y2="23"/>
                 </svg>
             </button>
-
-            <div class="hidden sm:block w-px bg-gray-200 my-2 flex-shrink-0"></div>
-
+            <div class="w-px h-5 bg-gray-200 flex-shrink-0"></div>
             <button id="searchBtn"
-                    class="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white px-6 py-2.5 rounded-2xl font-semibold w-full sm:w-auto text-sm flex items-center justify-center gap-2 transition-all duration-200 flex-shrink-0 mt-2 sm:mt-0 active:scale-95 shadow-sm hover:shadow-md hover:shadow-blue-200"
-                    style="font-family: 'Google Sans', 'Segoe UI', sans-serif;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" id="searchIcon">
+                    class="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white px-5 py-3 rounded-xl font-semibold text-md flex items-center gap-2 transition-all duration-200 active:scale-95 flex-shrink-0"
+                    style="font-family:'Google Sans','Segoe UI',sans-serif;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" id="searchIcon">
                     <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                 </svg>
                 <span id="btnSpinner" class="spinner hidden"></span>
                 Suchen
             </button>
         </div>
-
-        <!-- Badge -->
-        <div class="inline-flex mt-4 items-center gap-3 text-gray-400 text-xs font-semibold tracking-widest uppercase mb-5">
-            <span class="w-8 h-px bg-gray-700"></span>
-            Firmen, Standorte &amp; Dienstleistungen in der Schweiz
-            <span class="w-8 h-px bg-gray-700"></span>
-        </div>
-
-        <!-- Suggestion chips -->
-        <div class="mt-4 flex flex-wrap justify-center gap-2" id="suggestions"></div>
-
+        <div class="mt-2 flex flex-wrap gap-2" id="suggestions"></div>
     </div>
 </section>
 
 <!-- Map -->
-<section class="px-3 sm:px-6 flex-1">
-    <div class="max-w-4xl mx-auto">
-
+<section class="px-4 sm:px-6 pb-8">
+    <div class="max-w-6xl mx-auto">
         <div class="flex items-center justify-between mb-3 px-1">
-            <p class="text-xs font-semibold text-gray-400 tracking-widest uppercase">Ergebnisse auf der Karte</p>
+            <p class="text-sm font-bold text-black tracking-widest uppercase">Ergebnisse auf der Karte</p>
             <p id="resultsCount" class="hidden text-xs text-gray-400 tracking-wide"></p>
         </div>
-
         <div class="bg-white/60 backdrop-blur-md border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.1)] rounded-2xl sm:rounded-3xl overflow-hidden relative">
             <div id="statusOverlay"
                  class="hidden absolute top-4 left-1/2 -translate-x-1/2 z-[1000] bg-white/90 backdrop-blur-sm border border-gray-200 shadow-md rounded-full px-5 py-2 text-sm font-medium text-gray-700 flex items-center gap-2 whitespace-nowrap">
@@ -194,38 +200,274 @@
                 <span id="overlayText"></span>
             </div>
             <div id="emptyState" class="hidden"></div>
-            <div id="map" class="w-full h-[200px] sm:h-[520px] md:h-[600px]"></div>
+            <div id="map" class="w-full h-[320px] sm:h-[600px] md:h-[720px]"></div>
         </div>
-
     </div>
 </section>
-<!-- Footer -->
-<footer class="mt-10 bg-[#e9ecef] border-t border-gray-200">
-    <div class="max-w-6xl mx-auto px-6">
 
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 py-6">
+<section class="px-4 sm:px-6 py-8">
+    <div class="max-w-6xl mx-auto">
 
-            <!-- Logo -->
-            <div class="text-center sm:text-left cursor-default">
-                <span class="text-lg font-bold text-gray-900 tracking-tight">Telbuch</span>
-                <p class="text-[10px] text-gray-400 tracking-widest uppercase mt-0.5">Schweizer Ortsverzeichnis</p>
+        <div class="flex items-center gap-3 mb-6 px-1">
+            <p class="text-sm font-bold text-black tracking-widest uppercase">Top-Kategorien in der Schweiz</p>
+            <div class="flex-1 h-px bg-gray-200"></div>
+        </div>
+
+        <div class="grid grid-cols-4 gap-4">
+
+            <button onclick="document.getElementById('searchInput').value='Restaurant'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop&q=80"
+                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Restaurant</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Hotel'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Hotel</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Arzt'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=400&fit=crop&q=80
+" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Arzt</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Apotheke'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1563213126-a4273aed2016?w=600&h=400&fit=crop&q=80
+" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Apotheke</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Coiffeur'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop&q=80
+" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Coiffeur</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Bar'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Bar</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Tankstelle'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Tankstelle</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Bank'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?w=600&h=400&fit=crop&q=80
+" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Bank</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Supermarkt'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Supermarkt</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Zahnarzt'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&h=400&fit=crop&q=80
+" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Zahnarzt</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Parkplatz'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Parkplatz</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Museum'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1566127444979-b3d2b654e3d7?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Museum</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Bäckerei'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Bäckerei</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Fitnesscenter'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Fitness</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Post'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Post</p>
+                </div>
+            </button>
+
+            <button onclick="document.getElementById('searchInput').value='Schule'; document.getElementById('searchBtn').click();"
+                    class="group relative flex flex-col items-center justify-end overflow-hidden border-0 active:scale-95 transition-all duration-200 rounded-2xl h-40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=400&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="relative z-10 mb-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1">
+                    <p class="text-xs font-semibold text-white">Schule</p>
+                </div>
+            </button>
+
+        </div>
+    </div>
+</section>
+
+<section class=" px-4 sm:px-6 py-16">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+            <!-- Left — 4 cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                <div class="group bg-gray-950 border border-gray-800 rounded-2xl p-6 hover:bg-gray-800 hover:border-gray-700 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                    <p class="text-xs font-bold text-gray-500 tracking-widest uppercase mb-3">01</p>
+                    <p class="text-base font-bold text-white mb-2">Seit 2007</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Langjährige Erfahrung für Stabilität und Vertrauen.</p>
+                    <div class="mt-4 w-8 h-0.5 bg-white/30 group-hover:w-16 transition-all duration-300"></div>
+                </div>
+
+                <div class="group bg-gray-950 border border-gray-800 rounded-2xl p-6 hover:bg-gray-800 hover:border-gray-700 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                    <p class="text-xs font-bold text-gray-500 tracking-widest uppercase mb-3">02</p>
+                    <p class="text-base font-bold text-white mb-2">Rückwärtssuche</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Finden Sie heraus wer hinter einer Nummer steckt.</p>
+                    <div class="mt-4 w-8 h-0.5 bg-white/30 group-hover:w-16 transition-all duration-300"></div>
+                </div>
+
+                <div class="group bg-gray-950 border border-gray-800 rounded-2xl p-6 hover:bg-gray-800 hover:border-gray-700 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                    <p class="text-xs font-bold text-gray-500 tracking-widest uppercase mb-3">03</p>
+                    <p class="text-base font-bold text-white mb-2">Schweiz & International</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Alle Vorwahlen an einem Ort.</p>
+                    <div class="mt-4 w-8 h-0.5 bg-white/30 group-hover:w-16 transition-all duration-300"></div>
+                </div>
+
+                <div class="group bg-gray-950 border border-gray-800 rounded-2xl p-6 hover:bg-gray-800 hover:border-gray-700 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                    <p class="text-xs font-bold text-gray-500 tracking-widest uppercase mb-3">04</p>
+                    <p class="text-base font-bold text-white mb-2">100% Kostenlos</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Datenschutzorientiert und für alle kostenlos.</p>
+                    <div class="mt-4 w-8 h-0.5 bg-white/30 group-hover:w-16 transition-all duration-300"></div>
+                </div>
+
             </div>
 
-            <!-- Links -->
-            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
-                <a href="https://muece.com" target="_blank" rel="noreferrer"
-                   class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">Portfolio</a>
-                <a href="" class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">GitHub</a>
-                <a href="" class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">LinkedIn</a>
-                <a href="" class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">Impressum</a>
-                <a href="" class="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors duration-200">Datenschutz</a>
+            <!-- Right — CTA pushed more to the right -->
+            <div class="flex flex-col gap-6 lg:pl-12">
+                <p class="text-xs font-bold text-blue-500 tracking-widest uppercase">Über Telbuch</p>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight" style="font-family:'Clash Display',sans-serif;">
+                    Das Schweizer<br>Telefonbuch seit 2007
+                </h2>
+                <p class="text-sm text-gray-400 leading-relaxed">
+                    Zuverlässig, kostenlos und datenschutzorientiert — für alle die schnell die richtige Nummer finden wollen. Ob Vorwahl, Firma oder Privatperson.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="Kontakt.html"
+                       class="inline-flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold text-sm px-6 py-3 rounded-xl hover:bg-gray-100 active:scale-95 transition-all duration-200">
+                        Kontakt aufnehmen →
+                    </a>
+                    <a href="Vorwahlen-Schweiz.html"
+                       class="inline-flex items-center justify-center gap-2 bg-gray-950 text-white font-semibold text-sm px-6 py-3 rounded-xl hover:bg-gray-800 active:scale-95 transition-all duration-200 border border-gray-800">
+                        Vorwahlen ansehen →
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class="bg-gray-900 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+            <!-- Brand -->
+            <div>
+                <span class="text-base font-bold text-white tracking-tight">Telbuch</span>
+                <p class="text-[10px] text-gray-500 tracking-widest uppercase mt-0.5 mb-3">Schweizer Ortsverzeichnis</p>
+                <p class="text-xs text-gray-400 leading-relaxed max-w-xs">
+                    Firmen, Standorte &amp; Dienstleistungen in der Schweiz — kostenlos und aktuell seit 2007.
+                </p>
+            </div>
+
+            <!-- Soziales -->
+            <div>
+                <p class="text-[10px] font-bold text-gray-500 tracking-widest uppercase mb-4">Soziales</p>
+                <div class="flex flex-col">
+                    <a href="https://muece.com" target="_blank" rel="noreferrer"
+                       class="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-2.5 border-b border-gray-800">
+                        Portfolio
+                    </a>
+                    <a class="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-2.5 border-b border-gray-800 cursor-pointer">
+                        GitHub
+                    </a>
+                    <a class="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-2.5 cursor-pointer">
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+
+            <!-- Rechtliches -->
+            <div>
+                <p class="text-[10px] font-bold text-gray-500 tracking-widest uppercase mb-4">Rechtliches</p>
+                <div class="flex flex-col">
+                    <a class="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-2.5 border-b border-gray-800 cursor-pointer">
+                        Impressum
+                    </a>
+                    <a class="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-2.5 border-b border-gray-800 cursor-pointer">
+                        Datenschutz
+                    </a>
+                    <a href="Kontakt.html" class="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-2.5">
+                        Kontakt
+                    </a>
+                </div>
             </div>
 
         </div>
 
         <!-- Bottom -->
-        <div class="border-t border-gray-200 py-4 text-center">
-            <p class="text-xs text-gray-400">© 2026 SwissSearch · Made in Switzerland 🇨🇭</p>
+        <div class="border-t border-gray-800 mt-10 pt-5 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p class="text-xs text-gray-500">© 2026 Telbuch · Made in Switzerland 🇨🇭</p>
+            <p class="text-xs text-gray-500">Seit 2007</p>
         </div>
 
     </div>
