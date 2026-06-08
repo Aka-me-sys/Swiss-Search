@@ -162,8 +162,7 @@
                    class="flex-1 text-sm sm:text-md outline-none font-semibold text-black bg-transparent placeholder-black py-0.5 sm:py-1"
                    style="font-family:'Google Sans','Segoe UI',sans-serif;" />
             <button id="voiceBtn" onclick="startVoice()"
-                    class=" hover:bg-gray-300 disabled:opacity-60 text-black px-3 sm:px-5 py-1.5 sm:py-3 rounded-xl font-semibold text-sm flex items-center gap-2 transition-all duration-200 active:scale-95 flex-shrink-0"
-                    style=""
+                    class="hidden sm:flex items-center justify-center hover:bg-gray-300 disabled:opacity-60 text-black px-3 sm:px-5 py-1.5 sm:py-3 rounded-xl font-semibold text-sm transition-all duration-200 active:scale-95 flex-shrink-0"
                     title="Spracheingabe">
                 <svg id="voiceIcon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                     <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
@@ -172,7 +171,7 @@
                     <line x1="8" y1="23" x2="16" y2="23"/>
                 </svg>
             </button>
-            <div class="w-px h-5 bg-gray-200 flex-shrink-0"></div>
+            <div class="hidden sm:block w-px h-5 bg-gray-200 flex-shrink-0"></div>
             <button id="searchBtn"
                     class="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white px-3 py-2 sm:px-5 sm:py-3 rounded-xl font-semibold text-sm sm:text-md flex items-center gap-2 transition-all duration-200 active:scale-95 flex-shrink-0"
                     style="font-family:'Google Sans','Segoe UI',sans-serif;">
@@ -180,7 +179,7 @@
                     <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                 </svg>
                 <span id="btnSpinner" class="spinner hidden"></span>
-                Suchen
+                <span class="hidden sm:inline">Suchen</span>
             </button>
         </div>
         <div class="mt-2 flex flex-wrap gap-2" id="suggestions"></div>
