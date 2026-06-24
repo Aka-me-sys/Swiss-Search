@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title id="pageTitle">Telefonbuch | Telbuch</title>
+    <meta name="description" id="pageDesc" content="Telefonbuch">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700,800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Segoe UI', system-ui, sans-serif; }
+        .nav-link { border-radius: 8px; transition: background-color 0.15s ease, color 0.15s ease; }
+        .nav-link:hover { background-color: rgba(0,0,0,0.05); color: #111827; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .fade-up { animation: fadeUp 0.3s ease forwards; }
+    </style>
+</head>
+<body class="min-h-screen bg-[#e9ecef] flex flex-col">
+
+<!-- Navbar -->
+<nav class=" top-0 z-50 bg-[#e9ecef] border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex flex-col leading-tight cursor-default">
+                <span class="text-lg font-bold text-gray-900 tracking-tight">Telbuch</span>
+                <span class="text-[10px] text-gray-400 tracking-widest uppercase hidden sm:block">Schweizer Ortsverzeichnis</span>
+            </div>
+            <div class="hidden md:flex items-center gap-1">
+                <a href="Vorwahlen-Schweiz.html" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Vorwahlen Schweiz</a>
+                <a href="VorwahlenAusland.html" target="_blank" rel="noreferrer" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Vorwahlen Ausland</a>
+                <a href="Telefonbuch.html" target="_blank" rel="noreferrer" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Telefonbuch Int.</a>
+                <a href="Kontakt.html" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Kontakt</a>
+            </div>
+            <button onclick="document.getElementById('mob-c').classList.toggle('hidden');"
+                    class="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-black/5 transition-colors">
+                <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
+                <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
+                <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
+            </button>
+        </div>
+    </div>
+    <div id="mob-c" class="hidden md:hidden bg-[#e9ecef] border-t border-gray-200">
+        <div class="max-w-6xl mx-auto px-6 py-3 flex flex-col gap-1">
+            <a href="Vorwahlen-Schweiz.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Vorwahlen Schweiz</a>
+            <a href="https://telbuch.ch/VorwahlenAusland.php" target="_blank" rel="noreferrer" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Vorwahlen Ausland</a>
+            <a href="Telefonbuch.html" target="_blank" rel="noreferrer" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Telefonbuch Int.</a>
+            <a href="Kontakt.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Kontakt</a>
+        </div>
+    </div>
+</nav>
+
+<section class="w-full px-4 sm:px-6 pt-10 pb-6 relative overflow-hidden">
+    <div class="absolute -top-10 -right-16 w-[200px] h-[200px] bg-blue-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+    <div class="absolute -bottom-16 -left-16 w-[220px] h-[220px] bg-indigo-100 rounded-full blur-3xl opacity-35 pointer-events-none"></div>
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="inline-flex items-center gap-3 text-gray-400 text-xs font-semibold tracking-widest uppercase mb-3">
+            <span class="w-8 h-px bg-gray-400"></span>
+            <span id="breadcrumb">Internationales Telefonbuch</span>
+            <span class="w-8 h-px bg-gray-400"></span>
+        </div>
+        <h1 id="heroTitle" class="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight mb-2" style="font-family:'Clash Display',sans-serif;">Telefonbuch</h1>
+        <p id="heroDesc" class="text-gray-500 text-sm max-w-lg mb-6">Suchen Sie Telefonnummern und Adressen.</p>
+        <div class="flex items-center bg-white/60 backdrop-blur-md border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.08)] rounded-2xl px-4 py-3 max-w-2xl focus-within:border-blue-300 transition-all duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-400 flex-shrink-0">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input id="searchInput" type="text" placeholder="Land suchen… z.B. Deutschland"
+                   class="flex-1 px-3 py-1 text-sm bg-transparent text-gray-700 placeholder-gray-400 outline-none"
+                   oninput="filterCountries(this.value)"
+                   onkeydown="if(event.key==='Enter') filterCountries(this.value)" />
+            <button onclick="doSearch()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-xl text-sm font-semibold transition-all active:scale-95 flex-shrink-0">
+                Suchen
+            </button>
+        </div>
+    </div>
+</section>
+
+<main class="flex-1 px-4 sm:px-6 pb-16">
+    <div class="max-w-6xl mx-auto">
+
+        <div class="mb-8">
+            <div class="flex items-center gap-3 mb-5">
+                <p class="text-sm font-bold text-gray-900">Alle Länder</p>
+                <div class="flex-1 h-px bg-gray-200"></div>
+            </div>
+            <div id="allCountries" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+        </div>
+
+        <div id="countryInfo"></div>
+
+    </div>
+</main>
+
+<footer class="bg-[#e9ecef] border-t border-gray-400">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div>
+                <span class="text-base font-bold text-gray-900">Telbuch</span>
+                <p class="text-[10px] text-gray-400 tracking-widest uppercase mt-0.5 mb-3">Schweizer Ortsverzeichnis</p>
+                <p class="text-xs text-gray-500 leading-relaxed max-w-xs">Firmen, Standorte &amp; Dienstleistungen in der Schweiz — kostenlos und aktuell seit 2007.</p>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 tracking-widest uppercase mb-4">Soziales</p>
+                <div class="flex flex-col">
+                    <a href="https://muece.com" target="_blank" class="text-sm text-gray-500 hover:text-gray-900 py-2.5 border-b border-gray-200">Portfolio</a>
+                    <a class="text-sm text-gray-500 hover:text-gray-900 py-2.5 border-b border-gray-200 cursor-pointer">GitHub</a>
+                    <a class="text-sm text-gray-500 hover:text-gray-900 py-2.5 cursor-pointer">LinkedIn</a>
+                </div>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 tracking-widest uppercase mb-4">Rechtliches</p>
+                <div class="flex flex-col">
+                    <a class="text-sm text-gray-500 hover:text-gray-900 py-2.5 border-b border-gray-200 cursor-pointer">Impressum</a>
+                    <a class="text-sm text-gray-500 hover:text-gray-900 py-2.5 border-b border-gray-200 cursor-pointer">Datenschutz</a>
+                    <a href="../Kontakt.html" class="text-sm text-gray-500 hover:text-gray-900 py-2.5">Kontakt</a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 mt-8 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p class="text-xs text-gray-400">© 2026 Telbuch · Made in Switzerland 🇨🇭</p>
+            <p class="text-xs text-gray-400">Seit 2007</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const COUNTRIES = {
+        'albanien':      { name:'Albanien',      vorwahl:'+355', slug:'telefonbuch-albanien',              path:'Europa' },
+        'andorra':       { name:'Andorra',       vorwahl:'+376', slug:'telefonbuch-andorra',               path:'Europa' },
+        'belgien':       { name:'Belgien',       vorwahl:'+32',  slug:'telefonbuch-belgien',               path:'telefonbuch' },
+        'bosnien-herzegowina': { name:'Bosnien-Herzegowina', vorwahl:'+387', slug:'telefonbuch-bosnien-herzegowina', path:'telefonbuch' },
+        'bulgarien':     { name:'Bulgarien',     vorwahl:'+359', slug:'telefonbuch-bulgarien',             path:'telefonbuch' },
+        'deutschland':   { name:'Deutschland',   vorwahl:'+49',  slug:'telefonbuch-deutschland',           path:'telefonbuch' },
+        'daenemark':     { name:'Dänemark',      vorwahl:'+45',  slug:'telefonbuch-daenemark',             path:'telefonbuch' },
+        'england':       { name:'England',       vorwahl:'+44',  slug:'telefonbuch-england',               path:'telefonbuch' },
+        'estland':       { name:'Estland',       vorwahl:'+372', slug:'telefonbuch-estland',               path:'telefonbuch' },
+        'finnland':      { name:'Finnland',      vorwahl:'+358', slug:'telefonbuch-finnland',              path:'telefonbuch' },
+        'frankreich':    { name:'Frankreich',    vorwahl:'+33',  slug:'telefonbuch-frankreich',            path:'telefonbuch' },
+        'gibraltar':     { name:'Gibraltar',     vorwahl:'+350', slug:'telefonbuch-gibraltar',             path:'telefonbuch' },
+        'griechenland':  { name:'Griechenland',  vorwahl:'+30',  slug:'telefonbuch-griechenland',          path:'telefonbuch' },
+        'irland':        { name:'Irland',        vorwahl:'+353', slug:'telefonbuch-irland',                path:'telefonbuch' },
+        'island':        { name:'Island',        vorwahl:'+354', slug:'telefonbuch-island',                path:'telefonbuch' },
+        'isle-of-man':   { name:'Isle of Man',   vorwahl:'+44',  slug:'telefonbuch-isle-of-man',           path:'telefonbuch' },
+        'italien':       { name:'Italien',       vorwahl:'+39',  slug:'telefonbuch-italien',               path:'telefonbuch' },
+        'kroatien':      { name:'Kroatien',      vorwahl:'+385', slug:'telefonbuch-kroatien',              path:'telefonbuch' },
+        'liechtenstein': { name:'Liechtenstein', vorwahl:'+423', slug:'telefonbuch-liechtenstein',         path:'telefonbuch' },
+        'litauen':       { name:'Litauen',       vorwahl:'+370', slug:'telefonbuch-litauen',               path:'telefonbuch' },
+        'luxemburg':     { name:'Luxemburg',     vorwahl:'+352', slug:'telefonbuch-luxemburg',             path:'telefonbuch' },
+        'mazedonien':    { name:'Mazedonien',    vorwahl:'+389', slug:'telefonbuch-mazedonien',            path:'telefonbuch' },
+        'niederlande':   { name:'Niederlande',   vorwahl:'+31',  slug:'telefonbuch-niederlande',           path:'telefonbuch' },
+        'norwegen':      { name:'Norwegen',      vorwahl:'+47',  slug:'telefonbuch-norwegen',              path:'telefonbuch' },
+        'polen':         { name:'Polen',         vorwahl:'+48',  slug:'telefonbuch-polen',                 path:'telefonbuch' },
+        'portugal':      { name:'Portugal',      vorwahl:'+351', slug:'telefonbuch-portugal',              path:'telefonbuch' },
+        'rumaenien':     { name:'Rumänien',      vorwahl:'+40',  slug:'telefonbuch-rumaenien',             path:'telefonbuch' },
+        'san-marino':    { name:'San Marino',    vorwahl:'+378', slug:'telefonbuch-san-marino',            path:'telefonbuch' },
+        'schweden':      { name:'Schweden',      vorwahl:'+46',  slug:'telefonbuch-schweden',              path:'telefonbuch' },
+        'schweiz':       { name:'Schweiz',       vorwahl:'+41',  slug:'telefonbuch-schweiz',               path:'telefonbuch' },
+        'slowakische-republik': { name:'Slowakische Republik', vorwahl:'+421', slug:'telefonbuch-slowakische-republik', path:'telefonbuch' },
+        'slowenien':     { name:'Slowenien',     vorwahl:'+386', slug:'telefonbuch-slowenien',             path:'telefonbuch' },
+        'spanien':       { name:'Spanien',       vorwahl:'+34',  slug:'telefonbuch-spanien',               path:'telefonbuch' },
+        'tschechische-republik': { name:'Tschechische Republik', vorwahl:'+420', slug:'telefonbuch-tschechische-republik', path:'telefonbuch' },
+        'tuerkei':       { name:'Türkei',        vorwahl:'+90',  slug:'telefonbuch-tuerkei',               path:'telefonbuch' },
+        'ukraine':       { name:'Ukraine',       vorwahl:'+380', slug:'telefonbuch-ukraine',               path:'telefonbuch' },
+        'ungarn':        { name:'Ungarn',        vorwahl:'+36',  slug:'telefonbuch-ungarn',                path:'telefonbuch' },
+        'oesterreich':   { name:'Österreich',    vorwahl:'+43',  slug:'telefonbuch-oesterreich',           path:'telefonbuch' },
+        'aegypten':      { name:'Ägypten',       vorwahl:'+20',  slug:'telefonbuch-aegypten',              path:'telefonbuch' },
+        'benin':         { name:'Benin',         vorwahl:'+229', slug:'telefonbuch-benin',                 path:'telefonbuch' },
+        'botswana':      { name:'Botswana',      vorwahl:'+267', slug:'telefonbuch-botswana',              path:'telefonbuch' },
+        'burkina-faso':  { name:'Burkina Faso',  vorwahl:'+226', slug:'telefonbuch-burkina-faso',          path:'telefonbuch' },
+        'burundi':       { name:'Burundi',       vorwahl:'+257', slug:'telefonbuch-burundi',               path:'telefonbuch' },
+        'djibouti':      { name:'Djibouti',      vorwahl:'+253', slug:'telefonbuch-djibouti',              path:'telefonbuch' },
+        'elfenbeinkueste': { name:'Elfenbeinküste', vorwahl:'+225', slug:'telefonbuch-elfenbeinkueste',    path:'telefonbuch' },
+        'gabun':         { name:'Gabun',         vorwahl:'+241', slug:'telefonbuch-gabun',                 path:'telefonbuch' },
+        'guinea':        { name:'Guinea',        vorwahl:'+224', slug:'telefonbuch-guinea',                path:'telefonbuch' },
+        'kenia':         { name:'Kenia',         vorwahl:'+254', slug:'telefonbuch-kenia',                 path:'telefonbuch' },
+        'madagaskar':    { name:'Madagaskar',    vorwahl:'+261', slug:'telefonbuch-madagaskar',            path:'telefonbuch' },
+        'mali':          { name:'Mali',          vorwahl:'+223', slug:'telefonbuch-mali',                  path:'telefonbuch' },
+        'marokko':       { name:'Marokko',       vorwahl:'+212', slug:'telefonbuch-marokko',               path:'telefonbuch' },
+        'mauretanien':   { name:'Mauretanien',   vorwahl:'+222', slug:'telefonbuch-mauretanien',           path:'telefonbuch' },
+        'mauritius':     { name:'Mauritius',     vorwahl:'+230', slug:'telefonbuch-mauritius',             path:'telefonbuch' },
+        'mozambique':    { name:'Mozambique',    vorwahl:'+258', slug:'telefonbuch-mozambique',            path:'telefonbuch' },
+        'niger':         { name:'Niger',         vorwahl:'+227', slug:'telefonbuch-niger',                 path:'telefonbuch' },
+        'republik-kongo': { name:'Republik Kongo', vorwahl:'+242', slug:'telefonbuch-republik-kongo',     path:'telefonbuch' },
+        'ruanda':        { name:'Ruanda',        vorwahl:'+250', slug:'telefonbuch-ruanda',                path:'telefonbuch' },
+        'senegal':       { name:'Senegal',       vorwahl:'+221', slug:'telefonbuch-senegal',               path:'telefonbuch' },
+        'suedafrika':    { name:'Südafrika',     vorwahl:'+27',  slug:'telefonbuch-suedafrika',            path:'telefonbuch' },
+        'togo':          { name:'Togo',          vorwahl:'+228', slug:'telefonbuch-togo',                  path:'telefonbuch' },
+        'tunesien':      { name:'Tunesien',      vorwahl:'+216', slug:'telefonbuch-tunesien',              path:'telefonbuch' },
+        'zentralafrikanische-republik': { name:'Zentralafrikanische Republik', vorwahl:'+236', slug:'telefonbuch-zentralafrikanische-republik', path:'telefonbuch' },
+        'afghanistan':   { name:'Afghanistan',   vorwahl:'+93',  slug:'telefonbuch-afghanistan',           path:'telefonbuch' },
+        'aserbaidschan': { name:'Aserbaidschan', vorwahl:'+994', slug:'telefonbuch-aserbaidschan',         path:'telefonbuch' },
+        'kasachstan':    { name:'Kasachstan',    vorwahl:'+7',   slug:'telefonbuch-kasachstan',            path:'telefonbuch' },
+        'thailand':      { name:'Thailand',      vorwahl:'+66',  slug:'telefonbuch-thailand',              path:'telefonbuch' },
+        'usbekistan':    { name:'Usbekistan',    vorwahl:'+998', slug:'telefonbuch-usbekistan',            path:'telefonbuch' },
+        'cook-inseln':   { name:'Cook Inseln',   vorwahl:'+682', slug:'telefonbuch-cook-inseln',           path:'telefonbuch' },
+        'guam':          { name:'Guam',          vorwahl:'+1671',slug:'telefonbuch-guam',                  path:'telefonbuch' },
+        'mikronesien':   { name:'Mikronesien',   vorwahl:'+691', slug:'telefonbuch-mikronesien',           path:'telefonbuch' },
+        'neukaledonien': { name:'Neukaledonien', vorwahl:'+687', slug:'telefonbuch-neukaledonien',         path:'telefonbuch' },
+        'neuseeland':    { name:'Neuseeland',    vorwahl:'+64',  slug:'telefonbuch-neuseeland',            path:'telefonbuch' },
+        'papua-neuguinea': { name:'Papua-Neuguinea', vorwahl:'+675', slug:'telefonbuch-papua-neuguinea',   path:'telefonbuch' },
+        'china':         { name:'China',         vorwahl:'+86',  slug:'telefonbuch-china',                 path:'telefonbuch' },
+        'hongkong':      { name:'Hongkong',      vorwahl:'+852', slug:'telefonbuch-hongkong',              path:'telefonbuch' },
+        'japan':         { name:'Japan',         vorwahl:'+81',  slug:'telefonbuch-japan',                 path:'telefonbuch' },
+        'macao':         { name:'Macao',         vorwahl:'+853', slug:'telefonbuch-macao',                 path:'telefonbuch' },
+        'suedkorea':     { name:'Südkorea',      vorwahl:'+82',  slug:'telefonbuch-suedkorea',             path:'telefonbuch' },
+        'taiwan':        { name:'Taiwan',        vorwahl:'+886', slug:'telefonbuch-taiwan',                path:'telefonbuch' },
+        'indien':        { name:'Indien',        vorwahl:'+91',  slug:'telefonbuch-indien',                path:'telefonbuch' },
+        'pakistan':      { name:'Pakistan',      vorwahl:'+92',  slug:'telefonbuch-pakistan',              path:'telefonbuch' },
+        'bangladesch':   { name:'Bangladesch',   vorwahl:'+880', slug:'telefonbuch-bangladesch',           path:'telefonbuch' },
+        'anguilla':      { name:'Anguilla',      vorwahl:'+1264',slug:'telefonbuch-anguilla',              path:'telefonbuch' },
+        'aruba':         { name:'Aruba',         vorwahl:'+297', slug:'telefonbuch-aruba',                 path:'telefonbuch' },
+        'barbados':      { name:'Barbados',      vorwahl:'+1246',slug:'telefonbuch-barbados',              path:'telefonbuch' },
+        'cayman-inseln': { name:'Cayman Inseln', vorwahl:'+1345',slug:'telefonbuch-cayman-inseln',         path:'telefonbuch' },
+        'dominica':      { name:'Dominica',      vorwahl:'+1767',slug:'telefonbuch-dominica',              path:'telefonbuch' },
+        'jamaika':       { name:'Jamaika',       vorwahl:'+1876',slug:'telefonbuch-jamaika',               path:'telefonbuch' },
+        'jungferninseln': { name:'Jungferninseln', vorwahl:'+1340', slug:'telefonbuch-jungferninseln',     path:'telefonbuch' },
+        'kuba':          { name:'Kuba',          vorwahl:'+53',  slug:'telefonbuch-kuba',                  path:'telefonbuch' },
+        'montserrat':    { name:'Montserrat',    vorwahl:'+1664',slug:'telefonbuch-montserrat',            path:'telefonbuch' },
+        'puerto-rico':   { name:'Puerto Rico',   vorwahl:'+1787',slug:'telefonbuch-puerto-rico',           path:'telefonbuch' },
+        'santa-lucia':   { name:'Santa Lucia',   vorwahl:'+1758',slug:'telefonbuch-santa-lucia',           path:'telefonbuch' },
+        'st-kitts-und-nevis': { name:'St. Kitts und Nevis', vorwahl:'+1869', slug:'telefonbuch-st-kitts-und-nevis', path:'telefonbuch' },
+        'st-vincent':    { name:'St. Vincent',   vorwahl:'+1784',slug:'telefonbuch-st-vincent',            path:'telefonbuch' },
+        'turks-und-caicos-inseln': { name:'Turks und Caicos', vorwahl:'+1649', slug:'telefonbuch-turks-und-caicos-inseln', path:'telefonbuch' },
+        'costa-rica':    { name:'Costa Rica',    vorwahl:'+506', slug:'telefonbuch-costa-rica',            path:'telefonbuch' },
+        'guatemala':     { name:'Guatemala',     vorwahl:'+502', slug:'telefonbuch-guatemala',             path:'telefonbuch' },
+        'honduras':      { name:'Honduras',      vorwahl:'+504', slug:'telefonbuch-honduras',              path:'telefonbuch' },
+        'nicaragua':     { name:'Nicaragua',     vorwahl:'+505', slug:'telefonbuch-nicaragua',             path:'telefonbuch' },
+        'panama':        { name:'Panama',        vorwahl:'+507', slug:'telefonbuch-panama',                path:'telefonbuch' },
+        'el-salvador':   { name:'El Salvador',   vorwahl:'+503', slug:'telefonbuch-el-salvador',           path:'telefonbuch' },
+        'armenien':      { name:'Armenien',      vorwahl:'+374', slug:'telefonbuch-armenien',              path:'telefonbuch' },
+        'bahrain':       { name:'Bahrain',       vorwahl:'+973', slug:'telefonbuch-bahrain',               path:'telefonbuch' },
+        'irak':          { name:'Irak',          vorwahl:'+964', slug:'telefonbuch-irak',                  path:'telefonbuch' },
+        'iran':          { name:'Iran',          vorwahl:'+98',  slug:'telefonbuch-iran',                  path:'telefonbuch' },
+        'israel':        { name:'Israel',        vorwahl:'+972', slug:'telefonbuch-israel',                path:'telefonbuch' },
+        'jemen':         { name:'Jemen',         vorwahl:'+967', slug:'telefonbuch-jemen',                 path:'telefonbuch' },
+        'jordanien':     { name:'Jordanien',     vorwahl:'+962', slug:'telefonbuch-jordanien',             path:'telefonbuch' },
+        'kuwait':        { name:'Kuwait',        vorwahl:'+965', slug:'telefonbuch-kuwait',                path:'telefonbuch' },
+        'libanon':       { name:'Libanon',       vorwahl:'+961', slug:'telefonbuch-libanon',               path:'telefonbuch' },
+        'quatar':        { name:'Quatar',        vorwahl:'+974', slug:'telefonbuch-quatar',                path:'telefonbuch' },
+        'saudi-arabien': { name:'Saudi-Arabien', vorwahl:'+966', slug:'telefonbuch-saudi-arabien',         path:'telefonbuch' },
+        'syrien':        { name:'Syrien',        vorwahl:'+963', slug:'telefonbuch-syrien',                path:'telefonbuch' },
+        'vereinigte-arabische-emirate': { name:'Vereinigte Arabische Emirate', vorwahl:'+971', slug:'telefonbuch-vereinigte-arabische-emirate', path:'telefonbuch' },
+        'kanada':        { name:'Kanada',        vorwahl:'+1',   slug:'telefonbuch-kanada',                path:'telefonbuch' },
+        'mexiko':        { name:'Mexiko',        vorwahl:'+52',  slug:'telefonbuch-mexiko',                path:'telefonbuch' },
+        'usa':           { name:'USA',           vorwahl:'+1',   slug:'telefonbuch-usa',                   path:'telefonbuch' },
+        'argentinien':   { name:'Argentinien',   vorwahl:'+54',  slug:'telefonbuch-argentinien',           path:'telefonbuch' },
+        'bolivien':      { name:'Bolivien',      vorwahl:'+591', slug:'telefonbuch-bolivien',              path:'telefonbuch' },
+        'brasilien':     { name:'Brasilien',     vorwahl:'+55',  slug:'telefonbuch-brasilien',             path:'telefonbuch' },
+        'chile':         { name:'Chile',         vorwahl:'+56',  slug:'telefonbuch-chile',                 path:'telefonbuch' },
+        'ecuador':       { name:'Ecuador',       vorwahl:'+593', slug:'telefonbuch-ecuador',               path:'telefonbuch' },
+        'guyana':        { name:'Guyana',        vorwahl:'+592', slug:'telefonbuch-guyana',                path:'telefonbuch' },
+        'kolumbien':     { name:'Kolumbien',     vorwahl:'+57',  slug:'telefonbuch-kolumbien',             path:'telefonbuch' },
+        'paraguay':      { name:'Paraguay',      vorwahl:'+595', slug:'telefonbuch-paraguay',              path:'telefonbuch' },
+        'peru':          { name:'Peru',          vorwahl:'+51',  slug:'telefonbuch-peru',                  path:'telefonbuch' },
+        'suriname':      { name:'Suriname',      vorwahl:'+597', slug:'telefonbuch-suriname',              path:'telefonbuch' },
+        'uruguay':       { name:'Uruguay',       vorwahl:'+598', slug:'telefonbuch-uruguay',               path:'telefonbuch' },
+        'venezuela':     { name:'Venezuela',     vorwahl:'+58',  slug:'telefonbuch-venezuela',             path:'telefonbuch' },
+    };
+
+    function getCountryKey() {
+        const filename = window.location.pathname.split('/').pop().replace('.html','').toLowerCase();
+        return filename.replace('telefonbuch-','');
+    }
+
+    function toTitleCase(key) {
+        return key.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('-');
+    }
+
+    function buildCard(k, c) {
+        return `
+        <a href="Telefonbuch-${toTitleCase(k)}.html"
+           class="fade-up group bg-white/60 backdrop-blur-sm border border-gray-200 rounded-2xl px-5 py-5 h-20 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-[0_4px_16px_rgba(59,130,246,0.1)] hover:-translate-y-1 transition-all duration-200 flex items-center justify-between gap-3">
+            <div>
+                <p class="text-xs font-semibold text-blue-500 mb-0.5">${c.vorwahl}</p>
+                <p class="text-sm font-bold text-gray-900 leading-tight">${c.name}</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 group-hover:text-blue-400 flex-shrink-0 transition-colors">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>`;
+    }
+
+    function renderAllCountries() {
+        const grid = document.getElementById('allCountries');
+        grid.innerHTML = Object.entries(COUNTRIES).map(([k, c]) => buildCard(k, c)).join('');
+    }
+
+    function filterCountries(query) {
+        const q = query.trim().toLowerCase();
+        const grid = document.getElementById('allCountries');
+        const filtered = q
+            ? Object.entries(COUNTRIES).filter(([k, c]) =>
+                c.name.toLowerCase().includes(q) || c.vorwahl.includes(q))
+            : Object.entries(COUNTRIES);
+        grid.innerHTML = filtered.length
+            ? filtered.map(([k, c]) => buildCard(k, c)).join('')
+            : '<p class="text-sm text-gray-400 col-span-4 py-4">Keine Ergebnisse gefunden.</p>';
+    }
+
+    function loadCountryInfo(country) {
+        const box = document.getElementById('countryInfo');
+        const dialFrom = country.vorwahl.replace('+','');
+        box.innerHTML = `<div class="fade-up space-y-3">
+            <div class="bg-white/60 border border-gray-100 rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">Vorwahl</p>
+                <p class="text-sm font-semibold text-gray-900">${country.vorwahl}</p>
+            </div>
+            <div class="bg-white/60 border border-gray-100 rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">Land</p>
+                <p class="text-sm font-semibold text-gray-900">${country.name}</p>
+            </div>
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3">
+                <p class="text-xs text-blue-500 font-bold mb-1">📞 Anruf aus CH</p>
+                <p class="text-sm font-mono text-blue-800">00 ${dialFrom} + Nummer</p>
+            </div>
+        </div>`;
+    }
+
+    function doSearch() {
+        const q = document.getElementById('searchInput').value.trim();
+        if (!q) return;
+        filterCountries(q);
+    }
+
+    const key = getCountryKey();
+    const country = COUNTRIES[key];
+
+    if (country) {
+        document.getElementById('pageTitle').textContent = `Telefonbuch ${country.name} | Telbuch`;
+        document.getElementById('pageDesc').content = `Telefonbuch ${country.name} — Suchen Sie Nummern und Adressen in ${country.name}. Vorwahl ${country.vorwahl}.`;
+        document.getElementById('heroTitle').textContent = `Telefonbuch ${country.name}`;
+        document.getElementById('heroDesc').textContent = `Suchen Sie Telefonnummern und Adressen in ${country.name}. Ländervorwahl: ${country.vorwahl}`;
+        document.getElementById('breadcrumb').textContent = `Internationales Telefonbuch · ${country.name}`;
+        document.getElementById('searchInput').placeholder = `Nummer suchen… z.B. ${country.vorwahl} 123 456 789`;
+        loadCountryInfo(country);
+    } else {
+        document.getElementById('heroTitle').textContent = 'Internationales Telefonbuch';
+        document.getElementById('heroDesc').textContent = 'Alle Länder auf einen Blick — einfach suchen.';
+        document.getElementById('searchInput').placeholder = 'Land suchen… z.B. Deutschland';
+        document.getElementById('countryInfo').innerHTML = '';
+    }
+
+    renderAllCountries();
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+        filterCountries(this.value);
+    });
+</script>
+</body>
+</html>

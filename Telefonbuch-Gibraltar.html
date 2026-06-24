@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telefonbuch Gibraltar | Telbuch</title>
+  <meta name="description" content="Telefonbuch Gibraltar — Suchen Sie Telefonnummern und Adressen in Gibraltar. Vorwahl +350.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700,800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Segoe UI', system-ui, sans-serif; }
+    .nav-link { border-radius: 8px; transition: background-color 0.15s ease, color 0.15s ease; }
+    .nav-link:hover { background-color: rgba(0,0,0,0.05); color: #111827; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up { animation: fadeUp 0.3s ease forwards; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#e9ecef] flex flex-col">
+
+<nav class="sticky top-0 z-50 bg-[#e9ecef] border-b border-gray-200">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="../index.html" class="flex flex-col leading-tight cursor-pointer">
+        <span class="text-lg font-bold text-gray-900 tracking-tight">Telbuch</span>
+        <span class="text-[9px] text-gray-400 tracking-widest uppercase hidden sm:block">Schweizer Ortsverzeichnis</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1">
+        <a href="../index.html" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600">Community</a>
+        <a href="../Vorwahlen-Schweiz.html" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600">Vorwahlen Schweiz</a>
+        <a href="../VorwahlenAusland.html" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600">Vorwahlen Ausland</a>
+        <a href="../InternationalesTelefonbuch.html" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600">Telefonbuch Int.</a>
+        <a href="../Kontakt.html" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600">Kontakt</a>
+      </div>
+      <button onclick="document.getElementById('mob-c').classList.toggle('hidden');" class="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-black/5">
+        <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
+        <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
+        <span class="block w-5 h-0.5 bg-gray-600 rounded-full"></span>
+      </button>
+    </div>
+  </div>
+  <div id="mob-c" class="hidden md:hidden bg-[#e9ecef] border-t border-gray-200">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex flex-col gap-1">
+      <a href="../index.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 rounded-xl hover:bg-black/5">Community</a>
+      <a href="../Vorwahlen-Schweiz.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 rounded-xl hover:bg-black/5">Vorwahlen Schweiz</a>
+      <a href="../VorwahlenAusland.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 rounded-xl hover:bg-black/5">Vorwahlen Ausland</a>
+      <a href="../InternationalesTelefonbuch.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 rounded-xl hover:bg-black/5">Telefonbuch Int.</a>
+      <a href="../Kontakt.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 rounded-xl hover:bg-black/5">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<section class="w-full px-4 sm:px-6 pt-10 pb-6 relative overflow-hidden">
+  <div class="absolute -top-10 -right-16 w-[200px] h-[200px] bg-blue-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+  <div class="absolute -bottom-16 -left-16 w-[220px] h-[220px] bg-indigo-100 rounded-full blur-3xl opacity-35 pointer-events-none"></div>
+  <div class="max-w-6xl mx-auto relative z-10">
+    <div class="inline-flex items-center gap-3 text-gray-400 text-xs font-semibold tracking-widest uppercase mb-3">
+      <span class="w-8 h-px bg-gray-400"></span>
+      <span>Internationales Telefonbuch · Gibraltar</span>
+      <span class="w-8 h-px bg-gray-400"></span>
+    </div>
+    <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight mb-2" style="font-family:'Clash Display',sans-serif;">Telefonbuch Gibraltar</h1>
+    <p class="text-gray-500 text-sm max-w-lg mb-6">Suchen Sie Telefonnummern und Adressen in Gibraltar. Ländervorwahl: +350</p>
+    <div class="flex items-center bg-white/60 backdrop-blur-md border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.08)] rounded-2xl px-4 py-3 max-w-2xl focus-within:border-blue-300 transition-all duration-200">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-400 flex-shrink-0">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input id="searchInput" type="text" placeholder="Nummer suchen… z.B. +350 123 456 789"
+             class="flex-1 px-3 py-1 text-sm bg-transparent text-gray-700 placeholder-gray-400 outline-none"
+             onkeydown="if(event.key==='Enter') doSearch()" />
+      <button onclick="doSearch()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-xl text-sm font-semibold transition-all active:scale-95 flex-shrink-0">Suchen</button>
+    </div>
+  </div>
+</section>
+
+<main class="flex-1 px-4 sm:px-6 pb-16">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <p class="text-sm font-bold text-gray-900">Zuletzt Gesucht</p>
+          <div class="flex-1 h-px bg-gray-200"></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3505841590195" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3505841590195</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3504146354991" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3504146354991</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3506245188972" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3506245188972</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3501097273160" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3501097273160</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3501996896061" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3501996896061</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3503602474148" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3503602474148</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3504355798630" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3504355798630</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3507627693290" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3507627693290</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3505080248243" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3505080248243</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3509633749877" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3509633749877</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3503921711700" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3503921711700</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3502156249585" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3502156249585</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3501061100429" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3501061100429</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3503768506377" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3503768506377</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3502460178558" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3502460178558</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3501473204916" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3501473204916</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3504711217812" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3504711217812</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3502845410528" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3502845410528</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3509326155924" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3509326155924</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/3505168974836" target="_blank" rel="noreferrer" class="fade-up bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between gap-2"><span class="text-sm font-mono font-semibold text-gray-800">+3505168974836</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="text-gray-300 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <p class="text-sm font-bold text-gray-900">Länderinfos</p>
+          <div class="flex-1 h-px bg-gray-200"></div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/60 border border-gray-100 rounded-xl p-3">
+            <p class="text-xs text-gray-400 mb-1">Vorwahl</p>
+            <p class="text-sm font-semibold text-gray-900">+350</p>
+          </div>
+          <div class="bg-white/60 border border-gray-100 rounded-xl p-3">
+            <p class="text-xs text-gray-400 mb-1">Land</p>
+            <p class="text-sm font-semibold text-gray-900">Gibraltar</p>
+          </div>
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-3">
+            <p class="text-xs text-blue-500 font-bold mb-1">📞 Anruf aus CH</p>
+            <p class="text-sm font-mono text-blue-800">00 350 + Nummer</p>
+          </div>
+          <a href="../InternationalesTelefonbuch.html" class="block bg-white/60 border border-gray-200 rounded-xl p-3 hover:border-blue-300 transition-all">
+            <p class="text-xs text-gray-400 mb-1">Alle Länder</p>
+            <p class="text-sm font-semibold text-blue-600">← Zurück zur Übersicht</p>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="bg-[#e9ecef] border-t border-gray-400">
+  <div class="max-w-6xl mx-auto px-6 py-12">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+      <div>
+        <span class="text-base font-bold text-gray-900 tracking-tight">Telbuch</span>
+        <p class="text-[10px] text-gray-400 tracking-widest uppercase mt-0.5 mb-3">Schweizer Ortsverzeichnis</p>
+        <p class="text-xs text-gray-500 leading-relaxed max-w-xs">
+          Firmen, Standorte &amp; Dienstleistungen in der Schweiz — kostenlos und aktuell seit 2007.
+        </p>
+      </div>
+
+      <div>
+        <p class="text-[10px] font-bold text-gray-400 tracking-widest uppercase mb-4">Soziales</p>
+        <div class="flex flex-col">
+          <a href="https://muece.com" target="_blank" rel="noreferrer"
+             class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 border-b border-gray-200">
+            Portfolio
+          </a>
+          <a class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 border-b border-gray-200 cursor-pointer">
+            GitHub
+          </a>
+          <a class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 cursor-pointer">
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-[10px] font-bold text-gray-400 tracking-widest uppercase mb-4">Rechtliches</p>
+        <div class="flex flex-col">
+          <a class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 border-b border-gray-200 cursor-pointer">
+            Impressum
+          </a>
+          <a class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 border-b border-gray-200 cursor-pointer">
+            Datenschutz
+          </a>
+          <a href="Kontakt.html" class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5">
+            Kontakt
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="border-t border-gray-200 mt-10 pt-5 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p class="text-xs text-gray-400">© 2026 Telbuch · Made in Switzerland 🇨🇭</p>
+      <p class="text-xs text-gray-400">Seit 2007</p>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+function doSearch() {
+    const q = document.getElementById('searchInput').value.trim();
+    if (!q) return;
+    const num = q.replace(/\s+/g,'').replace(/^\+/,'');
+    window.open('https://telbuch.ch/telefonbuch/telefonbuch-gibraltar/' + num, '_blank');
+}
+</script>
+</body>
+</html>
