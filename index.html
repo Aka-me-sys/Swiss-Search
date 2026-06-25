@@ -48,8 +48,22 @@
 
 
     <style>
-        body { font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: #e9ecef;}
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #e9ecef;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            overscroll-behavior-y: none;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
 
         .nav-link {
             position: relative;
@@ -146,8 +160,10 @@
     <div class="max-w-6xl mx-auto px-6">
         <div class="flex items-center justify-between h-16">
             <div class="flex flex-col leading-tight cursor-default">
-                <span class="text-lg font-bold text-gray-900 tracking-tight">Telbuch</span>
-                <span class="text-[10px] text-gray-400 tracking-widest uppercase hidden sm:block">Schweizer Ortsverzeichnis</span>
+                <a href="index.html" class="logo-link flex flex-col leading-tight cursor-pointer">
+                    <span class="text-lg font-bold text-gray-900 tracking-tight">Telbuch</span>
+                    <span class="text-[9px] text-gray-400 tracking-widest uppercase hidden sm:block">Schweizer Ortsverzeichnis</span>
+                </a>
             </div>
             <div class="hidden md:flex items-center gap-1">
                 <a href="Vorwahlen-Schweiz.html" class="nav-link px-3 py-2 text-[15px] font-semibold text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer">Vorwahlen Schweiz</a>
@@ -166,7 +182,7 @@
     <div id="mob-c" class="hidden md:hidden bg-[#e9ecef] border-t border-gray-200">
         <div class="max-w-6xl mx-auto px-6 py-3 flex flex-col gap-1">
             <a href="Vorwahlen-Schweiz.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Vorwahlen Schweiz</a>
-            <a href="https://telbuch.ch/VorwahlenAusland.php" target="_blank" rel="noreferrer" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Vorwahlen Ausland</a>
+            <a href="VorwahlenAusland.html" target="_blank" rel="noreferrer" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Vorwahlen Ausland</a>
             <a href="Telefonbuch.html" target="_blank" rel="noreferrer" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Telefonbuch Int.</a>
             <a href="Kontakt.html" class="nav-link px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-black/5 transition-all">Kontakt</a>
         </div>
@@ -469,10 +485,10 @@
                        class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 border-b border-gray-200">
                         Portfolio
                     </a>
-                    <a class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 border-b border-gray-200 cursor-pointer">
+                    <a href="https://github.com/Aka-me-sys" class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 border-b border-gray-200 cursor-pointer">
                         GitHub
                     </a>
-                    <a class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 cursor-pointer">
+                    <a href="https://www.linkedin.com/in/mehmetali-m%C3%BCce-aa2994316/" class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 py-2.5 cursor-pointer">
                         LinkedIn
                     </a>
                 </div>
